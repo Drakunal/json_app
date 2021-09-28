@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:http/http.dart';
 
 class Network {
@@ -9,10 +11,10 @@ class Network {
     Uri uri = Uri.parse(Uri.encodeFull(url));
     Response response = await get(uri);
     if (response.statusCode == 200) {
-      print(response.body);
-      return response.body;
+      // print(json.encode(response.body));
+      return json.decode(response.body);
     } else {
-      print(response.statusCode);
+      // print(response.statusCode);
       return response.statusCode;
     }
   }
