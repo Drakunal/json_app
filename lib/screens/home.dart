@@ -28,16 +28,28 @@ class _HomeState extends State<Home> {
         appBar: AppBar(
           title: Text("Json"),
         ),
-        body: Center(
-          child: FutureBuilder(
-              future: data,
-              builder: (context, AsyncSnapshot snapshot) {
-                if (snapshot.hasData) {
-                  return Text(snapshot.data[0]['title']);
-                } else {
-                  return CircularProgressIndicator();
-                }
-              }),
-        ));
+        body: FutureBuilder(
+            future: data,
+            builder: (context, AsyncSnapshot snapshot) {
+              if (snapshot.hasData) {
+                // return Text(snapshot.data[0]['id'].toString());//returns the title or id of the first only
+                return createListView(snapshot.data, context);
+              } else {
+                return CircularProgressIndicator();
+              }
+            }));
+  }
+
+  createListView(List data, BuildContext context) {
+    return ListView.builder(
+        itemCount: data.length,
+        itemBuilder: (context, int index) {
+          return Card(
+              elevation: 4.5,
+              child: ListTile(
+                title: Text(data[index]['title']),
+                subtitle: Text(data[index]['id'].toString()),
+              ));
+        });
   }
 }
